@@ -1,0 +1,8 @@
+pm2.config.json
+*.env
+/private/**/*.txt
+/data/**/*.json
+/public/media/pairs/**/*.jpg
+/public/media/pairs/**/*.png
+/public/media/pairs/**/*.mp4
+/public/media/pairs/**/*.json
