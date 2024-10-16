@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=0.9">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://vjs.zencdn.net/8.16.1/video-js.css" rel="stylesheet" />
+    <link rel="stylesheet" href="css/styles.css">
+    <title>Login Form</title>
+    <link rel="icon" type="image/x-icon" href="media/icons/favicon.ico">
+    <style>
+        #pageContent {
+            zoom: 90%;
+            min-height: 100vh; 
+        }
+
+        .modal-backdrop, .modal-dialog {
+            zoom: 100%;
+        }
+
+        * {
+            caret-color: transparent;
+        }
+
+        input[type="password"] {
+            width: 100%; 
+            padding: 10px; 
+            box-sizing: border-box; 
+            overflow: hidden; 
+            white-space: nowrap; 
+            appearance: none;
+            outline: none; 
+            border: 1px solid #ced4da; 
+            border-radius: 4px; 
+            font-size: 16px; 
+            line-height: normal; 
+            height: 40px; 
+            margin: 0;
+            position: relative;
+        }
+
+        input[type="password"]:focus {
+            outline: none;
+        }
+
+        .modal-body {
+            padding-bottom: 0;
+        }
+
+        .modal-content {
+            padding: 0;
+        }
+
+        .form-group {
+            margin-bottom: 0;
+        }
+    </style>
+</head>
+<body>
+    <div id="passwordModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="passwordModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+        <div class="modal-dialog modal-dialog-centered" role="document" style="max-width: 400px;">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="passwordModalLabel">Voer het wachtwoord in voor toegang tot de website</h5>
+                </div>
+                <div class="modal-body" style="padding-bottom: 20px;">
+                    <div class="form-group">
+                        <label for="passwordInput">Wachtwoord:</label>
+                        <input type="password" class="form-control" id="passwordInput" placeholder="Voer het wachtwoord in">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" id="submitPassword" class="btn btn-success">Bevestigen</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="incorrectModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="passwordModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+        <div class="modal-dialog modal-dialog-centered" role="document" style="max-width: 400px;">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="passwordModalLabel">Onjuist wachtwoord. Probeer het opnieuw.</h5>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" id="incorrectPassword" class="btn btn-warning">Opbrengst</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/login.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://vjs.zencdn.net/8.16.1/video.min.js"></script>
+
+</body>
+</html>

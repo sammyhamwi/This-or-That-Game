@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=0.9">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://vjs.zencdn.net/8.16.1/video-js.css" rel="stylesheet" />
+    <link rel="stylesheet" href="css/styles.css">
+    <title>Dit of Dat Spel</title>
+    <link rel="icon" type="image/x-icon" href="media/icons/favicon.ico">
+    <style>
+        #pageContent {
+            zoom: 80%;
+            min-height: 100vh; 
+        }
+
+        .modal-backdrop, .modal-dialog {
+            zoom: 100%;
+        }
+
+        * {
+            caret-color: transparent;
+        }
+
+        .modal-body {
+            padding-bottom: 0;
+        }
+
+        .modal-content {
+            padding: 0;
+        }
+
+        .form-group {
+            margin-bottom: 0;
+        }
+
+        canvas {
+            position: fixed !important;
+            top: 0 !important;
+            left: 0 !important;
+            width: 100% !important;
+            height: 100% !important;
+            pointer-events: none !important;
+            z-index: 9999 !important;
+        }
+
+        .modal {
+            z-index: 1000 !important;
+        }
+
+        .modal-backdrop {
+            z-index: 900 !important;
+        }
+    </style>
+</head>
+<body>
+    <div id="pageContent">
+        <header>
+            <div class="jumbotron p-0 text-center position-relative">
+                <div class="container" style="padding-bottom: 30px; padding-top: 30px;">
+                    <h1 class="display-4 font-weight-bold">Dit of Dat Spel</h1>
+                    <p class="lead">Eerste Prototype</p>
+                    <a id="backButton" style="cursor: pointer; display: none;">
+                        <button class="btn btn-secondary rounded-button" onclick="scrollBottomTop(1);">
+                            <i class="fas fa-arrow-left"></i>&emsp;Terug naar Categorieen
+                        </button>
+                    </a>                        
+                </div>
+                <button id="statsLink" class="btn btn-outline-info rounded-circle position-absolute" style="top: 15px; right: 15px;" title="Stemstatistieken Bekijken">
+                    <i class="fas fa-chart-bar fa-lg"></i>
+                </button>
+                <a href="/logout" class="btn btn-outline-dark rounded-circle position-absolute" onclick="sessionStorage.clear();" style="top: 15px; left: 15px;" title="Logout">
+                    <i class="fa-solid fa-right-from-bracket"></i>
+                </a>
+            </div>
+        </header>
+
+        <div class="container" id="category-container">
+            <div class="text-center my-3" style="caret-color: transparent;">
+                <div class="form-check form-switch d-inline-flex align-items-center justify-content-center" style="caret-color: transparent; margin-top: 10px;">
+                    <input class="form-check-input" type="checkbox" id="toggleSwitch" onclick="handleToggle()" style="margin-right: 10px; caret-color: transparent;">
+                    <label class="form-check-label mb-0" for="toggleSwitch" style="font-style: italic; font-size: 1.2rem; caret-color: transparent;">Simple Modus</label>
+                </div>
+            </div>
+            <h2 class="text-center">Selecteer een Categorie</h2>
+            <div class="row justify-content-center">
+                <div class="col-6 col-md-4 col-lg-3 text-center mb-4">
+                    <div class="card bg-food" style="cursor: pointer;" onclick="loadMediaPairs('Eten'); scrollBottomTop(0);">
+                        <div class="card-body text-center">
+                            <img src="media/icons/food.svg" alt="Eten" class="icon" />
+                            <p class="card-text"><h3>Eten</h3></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6 col-md-4 col-lg-3 text-center mb-4">
+                    <div class="card bg-activities" style="cursor: pointer;" onclick="loadMediaPairs('Activiteiten'); scrollBottomTop(0);">
+                        <div class="card-body text-center">
+                            <img src="media/icons/activities.svg" alt="Activiteiten" class="icon" />
+                            <p class="card-text"><h3>Activiteiten</h3></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6 col-md-4 col-lg-3 text-center mb-4">
+                    <div class="card bg-music" style="cursor: pointer;" onclick="loadMediaPairs('Muziek'); scrollBottomTop(0);">
+                        <div class="card-body text-center">
+                            <img src="media/icons/music.svg" alt="Muziek" class="icon" />
+                            <p class="card-text"><h3>Muziek</h3></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row justify-content-center" style="margin-top: 10px;">
+                <div class="col-6 col-md-4 col-lg-3 text-center mb-4">
+                    <div class="card bg-culture" style="cursor: pointer;" onclick="loadMediaPairs('Cultuur'); scrollBottomTop(0);">
+                        <div class="card-body text-center">
+                            <img src="media/icons/culture.svg" alt="Cultuur" class="icon" />
+                            <p class="card-text"><h3>Cultuur</h3></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6 col-md-4 col-lg-3 text-center mb-4">
+                    <div class="card bg-nature" style="cursor: pointer;" onclick="loadMediaPairs('Natuur'); scrollBottomTop(0);">
+                        <div class="card-body text-center">
+                            <img src="media/icons/nature.svg" alt="Natuur" class="icon" />
+                            <p class="card-text"><h3>Natuur</h3></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6 col-md-4 col-lg-3 text-center mb-4">
+                    <div class="card bg-places" style="cursor: pointer;" onclick="loadMediaPairs('Plaatsen'); scrollBottomTop(0);">
+                        <div class="card-body text-center">
+                            <img src="media/icons/places.svg" alt="Plaatsen" class="icon" />
+                            <p class="card-text"><h3>Plaatsen</h3></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="container-fluid d-flex flex-column justify-content-center align-items-center" id="media-pairs" style="display: none; padding-bottom: 30px;">
+            <div class="spinner-container" id="loadingSpinner" style="display: none;">
+                <div class="spinner-border" role="status">
+                    <span class="sr-only">Loading...</span>
+                </div>
+            </div>
+            <div class="d-flex align-items-center" style="padding: 30px;">
+                <button id="previousButton" class="btn btn-success rounded-button" style="margin-right: 35px; margin-bottom: -10px; display: none;">
+                    <i class="fas fa-arrow-left"></i>&emsp;<b>Vorig</b>&ensp;
+                </button>
+                <h2 id="levelTitle" class="text-center mb-0 display-4 font-weight-bold" style="font-size: 2rem; margin: 0;"></h2>
+                <button id="nextButton" class="btn btn-success rounded-button" style="margin-left: 35px; margin-bottom: -10px; display: none;">
+                    &ensp;<b>Volgende</b>&emsp;<i class="fas fa-arrow-right"></i>
+                </button>
+            </div>
+
+            <div class="option-content" id="option-content" style="position: relative;">
+                <a id="viewButton" style="cursor: pointer; position: absolute; top: 10px; right: 10px; padding-top: 10px; display: none;">
+                    <button class="btn btn-info rounded-circle" title="Keuze-Overlay Bekijken" onclick="openOverlay();">
+                        <i class="fa-solid fa-image"></i>
+                    </button>
+                </a>
+                <div class="row justify-content-center mb-4 option-row" id="optionpairs" style="display: none;">
+                    <div class="col-5 text-center">
+                        <h3 id="name1" style="color: red; font-weight: bold;"></h3>
+                        <img id="option1" src="" alt="Option 1" class="img-fluid left-choice" style="display: none;" />
+                        <video id="videoPlayer1" class="left-choice" width="400" height="400" style="display: none; width: 100%;" controls>
+                            <source id="videoSource1" src="" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                        <div class="d-flex justify-content-center" style="padding-top: 25px;">
+                            <div class="form-group" id="vote1-container" style="display: none;">
+                                <label for="vote1" class="font-weight-bold">Optie 1 Stemmen:</label>
+                                <input type="number" class="form-control form-control-lg vote-input enhanced-input1" id="vote1" placeholder="Stemmen voor Optie 1" min="0" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-1 text-center">
+                        <h2 id="vs_title" style="font-weight: bold; font-style: italic;">of</h2>
+                    </div>
+                    <div class="col-5 text-center">
+                        <h3 id="name2" style="color: blue; font-weight: bold;"></h3>
+                        <img id="option2" src="" alt="Option 2" class="img-fluid right-choice" style="display: none;" />
+                        <video id="videoPlayer2" class="right-choice" width="400" height="400" style="display: none; width: 100%;" controls>
+                            <source id="videoSource2" src="" type="video/mp4">
+                            Uw browser ondersteunt de videotag niet.
+                        </video>
+                        <div class="d-flex justify-content-center" style="padding-top: 25px;">
+                            <div class="form-group" id="vote2-container" style="display: none;">
+                                <label for="vote2" class="font-weight-bold">Optie 2 Stemmen:</label>
+                                <input type="number" class="form-control form-control-lg vote-input enhanced-input2" id="vote2" placeholder="Stemmen voor Optie 2" min="0" />
+                            </div>
+                        </div>
+                    </div>
+                    <div style="padding-top: 20px">
+                        <button id="submitVotes" class="btn btn-info mb-3 rounded-button" style="display: none; padding: 10px 25px;">Stemmen Indienen</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<div class="modal fade" id="mediaOverlay" tabindex="-1" role="dialog" aria-labelledby="mediaOverlayLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="d-flex align-items-center">
+                    <button id="previousButtonOV" class="btn btn-success rounded-button" style="margin-right: 35px;">
+                        <i class="fas fa-arrow-left"></i>&emsp;<b>Vorig</b>&ensp;
+                    </button>
+                    <h3 class="modal-title" id="mediaOverlayLabel"></h3>
+                    <button id="nextButtonOV" class="btn btn-success rounded-button" style="margin-left: 35px;">
+                        &ensp;<b>Volgende</b>&emsp;<i class="fas fa-arrow-right"></i>
+                    </button>
+                </div>
+                <button type="button" id="closeov" class="close" data-dismiss="modal" id="closeButtonOV" onclick="closeOverlay();" aria-label="Close">
+                    <span aria-hidden="true"><i class="fa-regular fa-circle-xmark" style="font-size: 1.5em;"></i></span>
+                </button>
+            </div>
+            <div class="modal-body" id="ovBody" style="padding-bottom: 50px;">
+                <div class="row" id="overlayMediaContainer">
+                    <div class="col-5 text-center mb-3" id="imgDiv1" style="display: none;">
+                        <h1 class="ov-choice-name" id="name1" style="color: red; font-weight: bold;"></h1>
+                        <img id="option1-ov" class="img-fluid" alt="Option 1 Media" style="display: none;">
+                        <div class="video-wrapper" id="videoWrapper1" style="display: none;">
+                            <video id="videoPlayer1-ov" class="img-fluid" controls>
+                                <source id="videoSource1" src="" type="video/mp4">
+                                Your browser does not support the video tag.
+                            </video>
+                        </div>
+                    </div>
+                    <div class="col-1 text-center mb-3">
+                        <h2 class="ov-vslabel">of</h2>
+                    </div>
+                    <div class="col-5 text-center mb-3" id="imgDiv2" style="display: none;">
+                        <h1 class="ov-choice-name" id="name2" style="color: blue; font-weight: bold;"></h1>
+                        <img id="option2-ov" class="img-fluid" alt="Option 2 Media" style="display: none;">
+                        <div class="video-wrapper" id="videoWrapper2" style="display: none;">
+                            <video id="videoPlayer2-ov" class="img-fluid" controls>
+                                <source id="videoSource2" src="" type="video/mp4">
+                                Your browser does not support the video tag.
+                            </video>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button id="leftVoteButton" class="btn btn-danger btn-md mt-2"><b>Stem rood</b></button>
+                <button id="tieVoteButton" class="btn btn-success btn-md mt-2"><b>Gelijkspel</b></button>
+                <button id="rightVoteButton" class="btn btn-primary btn-md mt-2"><b>Stem blauw</b></button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+    <div id="passwordStatsModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="passwordModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+        <div class="modal-dialog modal-dialog-centered" role="document" style="max-width: 400px;">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="passwordModalLabel">Voer het wachtwoord in om toegang te krijgen tot de statistiekenpagina</h5>
+                </div>
+                <div class="modal-body" style="padding-bottom: 20px;">
+                    <div class="form-group">
+                        <label for="passwordInput">Wachtwoord:</label>
+                        <input type="password" class="form-control" id="passwordStatsInput" placeholder="Voer het wachtwoord in">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" id="submitStatsPassword" class="btn btn-success">Bevestigen</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="completedModal" tabindex="-1" role="dialog" aria-labelledby="mediaOverlayLabel" aria-hidden="true" data-keyboard="false" data-backdrop="static">
+        <div class="modal-dialog modal-dialog-centered" role="document" style="max-width: 700px;">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="completedModalLabel"></h5>
+                </div>
+                <div class="modal-body" style="padding: 40px 20px; text-align: center;">
+                    <h3>Gefeliciteerd!</h3>
+                    <p id="completeModalPara"></p>
+                </div>
+                <div class="modal-footer justify-content-center"> <!-- Center the button in the footer -->
+                    <button type="button" id="backButtonComplete" class="btn btn-success btn-lg" onclick="window.location.href = '/';">Terug naar Categorieen</button> <!-- Larger button -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="incorrectStatsModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="passwordModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+        <div class="modal-dialog modal-dialog-centered" role="document" style="max-width: 400px;">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="passwordModalLabel">Onjuist wachtwoord. Probeer het opnieuw.</h5>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" id="incorrectStatsPassword" class="btn btn-warning">Opbrengst</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.4.0/dist/confetti.browser.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://vjs.zencdn.net/8.16.1/video.min.js"></script>
+    <script src="js/script.js"></script>
+
+</body>
+</html>
