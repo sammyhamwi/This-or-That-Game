@@ -1,17 +1,13 @@
 # This or That Game
 #### Social interaction game focused on bringing people with dementia together
 &nbsp;
-This or That focuses on creating an easy way for people with dementia to sit together and talk about different subjects.
+This or That is designed to foster social engagement among individuals with dementia, providing a simple and enjoyable way for participants to sit together and discuss a variety of topics.
 
-The game focuses on choosing a category and then two images are shown: one with a blue border and one with a red border.
-You choose which one you prefer. There are no right or wrong answers, everything is correct as long as it brings 
-healthy conversation. After choosing your answer, the players explain why.
+In the game, players select a category, then two images are displayed—one with a blue border and one with a red border. Players choose the image they prefer, with no right or wrong answers. 
+The goal is to encourage conversation, as participants explain the reasons behind their choices, promoting healthy discussion.
 
-> This is still a very initial design and deployment
-> and it is important to note that this is still
-> a very early prototype version of the game.
-> There are still many technological and design
-> improvements to be done in the future.
+> Please note that this is an early-stage prototype, and both technological
+> and design improvements are planned for future development.
 
 ## Authors
 
