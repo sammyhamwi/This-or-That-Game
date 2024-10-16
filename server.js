@@ -95,7 +95,9 @@ app.get('/api/mediaPairs', async (req, res) => {
 
         for (const category of categories) {
             const categoryPath = path.join(pairsDir, category);
-            const files = await fs.readdir(categoryPath);
+            const allFiles = await fs.readdir(categoryPath);
+
+            const files = allFiles.filter(file => file.endsWith('.jpg') || file.endsWith('.png') || file.endsWith('.mp4'));
 
             const pairNamesPath = path.join(categoryPath, 'pairNames.json');
             let pairNames = {};
